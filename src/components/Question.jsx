@@ -67,9 +67,9 @@ function Question() {
             setEmptyAnswersCount(empty); // Updates the empty answers count.
 
             console.log(updatedAnswers); // Logs the answers for debugging.
-            console.log(correct);
-            console.log(wrong);
-            console.log(empty);
+            console.log('Correct Answwers:', correct);
+            console.log('Wrong Answwers:', wrong);
+            console.log('Empty Answwers:', empty);
 
 
             return updatedAnswers;
