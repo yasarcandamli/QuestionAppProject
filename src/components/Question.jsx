@@ -55,17 +55,18 @@ function Question() {
 
     const handleAnswerClick = (selectedOption) => {
         setUserAnswers(prevAnswers => {
-            const updatedAnswers = [...prevAnswers, selectedOption];
+            const updatedAnswers = [...prevAnswers, selectedOption]; // Stores the selected answer.
 
+            // Calculates correct, wrong, and empty answers.
             const correct = updatedAnswers.filter((answer, index) => answer === questions[index].answer).length;
             const wrong = updatedAnswers.filter((answer, index) => answer !== null && answer !== questions[index].answer).length;
             const empty = updatedAnswers.filter((answer, index) => answer === null).length;
 
-            setCorrectAnswersCount(correct);
-            setWrongAnswersCount(wrong);
-            setEmptyAnswersCount(empty);
+            setCorrectAnswersCount(correct); // Updates the correct answers count.
+            setWrongAnswersCount(wrong); // Updates the wrong answers count.
+            setEmptyAnswersCount(empty); // Updates the empty answers count.
 
-            console.log(updatedAnswers);
+            console.log(updatedAnswers); // Logs the answers for debugging.
             console.log(correct);
             console.log(wrong);
             console.log(empty);
@@ -74,11 +75,12 @@ function Question() {
             return updatedAnswers;
         });
 
-        setAnswerSelected(true);
-        goToNextQuestion();
+        setAnswerSelected(true); // Marks that an answer has been selected.
+        goToNextQuestion(); // Proceeds to the next question.
     };
 
     if (!currentQuestion) {
+        // Displays a loading message if the question data is not ready.
         return <h2>Soru Yükleniyor...</h2>;
     }
 
@@ -86,28 +88,33 @@ function Question() {
         <>
             {showResults ? (
                 <Results
-                    correctAnswersCount={correctAnswersCount}
-                    wrongAnswersCount={wrongAnswersCount}
-                    emptyAnswersCount={emptyAnswersCount}
+                    correctAnswersCount={correctAnswersCount} // Passes the correct answer count to Results.
+                    wrongAnswersCount={wrongAnswersCount} // Passes the wrong answer count to Results.
+                    emptyAnswersCount={emptyAnswersCount} // Passes the empty answer count to Results.
                 />
             ) : (
                 <div className="Question">
+                    {/* Displays the remaining time. */}
                     <p className="timer">Kalan Süre: {timer} saniye</p>
                     <div className="img-area">
+                        {/* Displays an image for the question. */}
                         <img className="question-img" src={`/${currentQuestion.media}`} alt="Question Image" />
                     </div>
                     <div className="question-area">
+                        {/* Displays the current question. */}
                         <h2 className="question">{currentQuestionIndex + 1}. {currentQuestion.question}</h2>
                     </div>
                     {showOptions ? (
                         <div className="options-area">
                             {currentQuestion.options.map((option, index) => (
+                                // Renders answer options.
                                 <button className="option-btn" key={index} onClick={() => handleAnswerClick(option)}>
                                     {option}
                                 </button>
                             ))}
                         </div>
                     ) : (
+                        // Displays a loading message before options appear.
                         <p className="loading">Şıklar yükleniyor...</p>
                     )}
                 </div>
