@@ -11,7 +11,7 @@ function Results({ correctAnswersCount, wrongAnswersCount, emptyAnswersCount, us
                     {userAnswers.map((answer, index) => (
                         <div key={index} className="answer-comparison">
                             <p><strong>Soru {index + 1}:</strong></p>
-                            <p>Verilen Cevap: {answer ? answer : "Boş"}</p>
+                            <p>Verilen Cevap: {answer !== null ? answer : "Boş"}</p>
                             <p>Doğru Cevap: {correctAnswers[index]}</p>
                         </div>
                     ))}

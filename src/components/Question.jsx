@@ -16,36 +16,31 @@ function Question() {
 
     useEffect(() => {
         if (currentQuestionIndex < questions.length) {
-            setCurrentQuestion(questions[currentQuestionIndex]); // Loads the current question based on the index.
+            setCurrentQuestion(questions[currentQuestionIndex]);
 
             const hideOptionsTimeout = setTimeout(() => {
-                // Displays the answer options after 4 seconds.
                 setShowOptions(true);
             }, 4000);
 
             const questionTimeout = setTimeout(() => {
-                // Automatically proceeds if no answer is selected within 30 seconds.
                 if (!answerSelected) {
-                    handleAnswerClick(null); // Records a null response if no response was given.
-                    if (currentQuestionIndex === questions.length - 1) {
-                        setShowResults(true); // The last question shows the test results.
-                    }
+                    handleAnswerClick(null); // Yanıt verilmediğinde null ekle
                 }
             }, 30000);
 
             const timerInterval = setInterval(() => {
-                // Decreases the timer every second.
                 setTimer((previous) => previous - 1);
             }, 1000);
 
             return () => {
-                // Clears timeouts and intervals on component unmount.
                 clearTimeout(hideOptionsTimeout);
                 clearTimeout(questionTimeout);
                 clearInterval(timerInterval);
             };
+        } else {
+            setShowResults(true);
         }
-    }, [currentQuestionIndex]); // Re-runs effect when the current question index changes.
+    }, [currentQuestionIndex]);
 
     const goToNextQuestion = () => {
         if (currentQuestionIndex < questions.length - 1) {
