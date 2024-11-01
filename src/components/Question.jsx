@@ -15,31 +15,36 @@ function Question() {
     const [answerSelected, setAnswerSelected] = useState(false); // Tracks whether an answer has been selected.
 
     useEffect(() => {
-        setCurrentQuestion(questions[currentQuestionIndex]); // Loads the current question based on the index.
+        if (currentQuestionIndex < questions.length) {
+            setCurrentQuestion(questions[currentQuestionIndex]); // Loads the current question based on the index.
 
-        const hideOptionsTimeout = setTimeout(() => {
-            // Displays the answer options after 4 seconds.
-            setShowOptions(true);
-        }, 4000);
+            const hideOptionsTimeout = setTimeout(() => {
+                // Displays the answer options after 4 seconds.
+                setShowOptions(true);
+            }, 4000);
 
-        const questionTimeout = setTimeout(() => {
-            // Automatically proceeds if no answer is selected within 30 seconds.
-            if (!answerSelected) {
-                handleAnswerClick(null);
-            }
-        }, 30000);
+            const questionTimeout = setTimeout(() => {
+                // Automatically proceeds if no answer is selected within 30 seconds.
+                if (!answerSelected) {
+                    handleAnswerClick(null); // Cevap verilmediyse null yanıt kaydeder.
+                    if (currentQuestionIndex === questions.length - 1) {
+                        setShowResults(true); // Son soruda test sonuçlarını gösterir.
+                    }
+                }
+            }, 30000);
 
-        const timerInterval = setInterval(() => {
-            // Decreases the timer every second.
-            setTimer((previous) => previous - 1);
-        }, 1000);
+            const timerInterval = setInterval(() => {
+                // Decreases the timer every second.
+                setTimer((previous) => previous - 1);
+            }, 1000);
 
-        return () => {
-            // Clears timeouts and intervals on component unmount.
-            clearTimeout(hideOptionsTimeout);
-            clearTimeout(questionTimeout);
-            clearInterval(timerInterval);
-        };
+            return () => {
+                // Clears timeouts and intervals on component unmount.
+                clearTimeout(hideOptionsTimeout);
+                clearTimeout(questionTimeout);
+                clearInterval(timerInterval);
+            };
+        }
     }, [currentQuestionIndex]); // Re-runs effect when the current question index changes.
 
     const goToNextQuestion = () => {
@@ -54,13 +59,14 @@ function Question() {
     };
 
     const handleAnswerClick = (selectedOption) => {
+        if (currentQuestionIndex >= questions.length) return;
         setUserAnswers(prevAnswers => {
             const updatedAnswers = [...prevAnswers, selectedOption]; // Stores the selected answer.
 
             // Calculates correct, wrong, and empty answers.
-            const correct = updatedAnswers.filter((answer, index) => answer === questions[index].answer).length;
-            const wrong = updatedAnswers.filter((answer, index) => answer !== null && answer !== questions[index].answer).length;
-            const empty = updatedAnswers.filter((answer, index) => answer === null).length;
+            const correct = updatedAnswers.filter((answer, index) => questions[index] && answer === questions[index].answer).length;
+            const wrong = updatedAnswers.filter((answer, index) => questions[index] && answer !== null && answer !== questions[index].answer).length;
+            const empty = updatedAnswers.filter((answer) => answer === null).length;
 
             setCorrectAnswersCount(correct); // Updates the correct answers count.
             setWrongAnswersCount(wrong); // Updates the wrong answers count.
@@ -91,6 +97,8 @@ function Question() {
                     correctAnswersCount={correctAnswersCount} // Passes the correct answer count to Results.
                     wrongAnswersCount={wrongAnswersCount} // Passes the wrong answer count to Results.
                     emptyAnswersCount={emptyAnswersCount} // Passes the empty answer count to Results.
+                    userAnswers={userAnswers} // User's anwers sending to the Result component
+                    correctAnswers={questions.map((question) => question.answer)}
                 />
             ) : (
                 <div className="Question">
