@@ -6,8 +6,8 @@ function Results({ correctAnswersCount, wrongAnswersCount, emptyAnswersCount, us
                 <p className="result">Doğru Sayısı: {correctAnswersCount}</p>
                 <p className="result">Yanlış Sayısı: {wrongAnswersCount}</p>
                 <p className="result">Boş Sayısı: {emptyAnswersCount}</p>
+                <h2>Cevaplarınız ve Doğru Cevaplar</h2>
                 <div className="answers-list">
-                    <h2>Cevaplarınız ve Doğru Cevaplar</h2>
                     {userAnswers.map((answer, index) => (
                         <div key={index} className="answer-comparison">
                             <p><strong>Soru {index + 1}:</strong></p>

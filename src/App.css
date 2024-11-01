@@ -31,7 +31,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: 5%;
-  padding: 5%;
+  padding: 2%;
   border: 5px solid var(--color-1);
   border-radius: 20px;
   width: 900px;
@@ -72,7 +72,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: 5%;
-  padding: 5%;
+  padding: 2%;
   border: 5px solid var(--color-1);
   border-radius: 20px;
   width: 900px;
@@ -139,7 +139,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: 5%;
-  padding: 5%;
+  padding: 2%;
   border: 5px solid var(--color-1);
   border-radius: 20px;
   width: 900px;
@@ -147,5 +147,19 @@ body {
 .result {
   font-size: 1.2rem;
   font-weight: 500;
+}
+.answers-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5px;
+}
+.answer-comparison {
+  width: 45%;
+  height: 140px;
+  padding: 0 10px;
+  border: 2px solid var(--color-1);
+  border-radius: 10px;
 }
 /* RESULTS END */

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Results from "./Results";
 
 function Question() {
-    const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0); // Tracks the index of the current question.
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0); // Tracks the index of the current question.
     const [currentQuestion, setCurrentQuestion] = useState(null); // Stores the current question data.
     const [showOptions, setShowOptions] = useState(false); // Controls whether answer options are displayed.
     const [timer, setTimer] = useState(30); // Sets a 30-second timer for each question.
@@ -16,6 +16,8 @@ function Question() {
 
     useEffect(() => {
         if (currentQuestionIndex < questions.length) {
+            console.log(currentQuestionIndex);
+
             setCurrentQuestion(questions[currentQuestionIndex]);
 
             const hideOptionsTimeout = setTimeout(() => {
@@ -23,7 +25,7 @@ function Question() {
             }, 4000);
 
             const questionTimeout = setTimeout(() => {
-                if (!answerSelected) {
+                if (!answerSelected && currentQuestionIndex < questions.length) {
                     handleAnswerClick(null); // Yanıt verilmediğinde null ekle
                 }
             }, 30000);
@@ -43,8 +45,8 @@ function Question() {
     }, [currentQuestionIndex]);
 
     const goToNextQuestion = () => {
-        if (currentQuestionIndex < questions.length - 1) {
-            setcurrentQuestionIndex(currentQuestionIndex + 1); // Moves to the next question.
+        if (currentQuestionIndex < questions.length) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1); // Moves to the next question.
             setShowOptions(false); // Hides the options for the next question.
             setTimer(30); // Resets the timer for the next question.
             setAnswerSelected(false); // Resets the answer selection state.
@@ -55,6 +57,7 @@ function Question() {
 
     const handleAnswerClick = (selectedOption) => {
         if (currentQuestionIndex >= questions.length) return;
+
         setUserAnswers(prevAnswers => {
             const updatedAnswers = [...prevAnswers, selectedOption]; // Stores the selected answer.
 
