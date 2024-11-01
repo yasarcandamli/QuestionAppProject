@@ -2,7 +2,7 @@
 
 Welcome to the Quiz Application! This app is a timed question-and-answer game with interactive instructions, multiple-choice questions, and a results display.
 
-Live Demo: You can try the Quiz Application [here on Vercel.](https://polite-puppy-fb2d51.netlify.app/)
+Live Demo: You can try the Quiz Application [from this link.](https://polite-puppy-fb2d51.netlify.app/)
 
 ## Project Overview
 
