@@ -26,9 +26,9 @@ function Question() {
             const questionTimeout = setTimeout(() => {
                 // Automatically proceeds if no answer is selected within 30 seconds.
                 if (!answerSelected) {
-                    handleAnswerClick(null); // Cevap verilmediyse null yanıt kaydeder.
+                    handleAnswerClick(null); // Records a null response if no response was given.
                     if (currentQuestionIndex === questions.length - 1) {
-                        setShowResults(true); // Son soruda test sonuçlarını gösterir.
+                        setShowResults(true); // The last question shows the test results.
                     }
                 }
             }, 30000);
